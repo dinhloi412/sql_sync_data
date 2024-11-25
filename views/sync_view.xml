@@ -1,0 +1,82 @@
+<odoo>
+    <record id="view_sql_server_sync_form" model="ir.ui.view">
+        <field name="name">sql.server.sync.form</field>
+        <field name="model">sql.server.sync</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="sync_data" string="Sync Now" type="object" class="oe_highlight" />
+                </header>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="server" />
+                        <field name="database" />
+                        <field name="use_windows_auth" />
+                        <field name="username"
+                            attrs="{'invisible': [('use_windows_auth', '=', True)]}" />
+                        <field name="password" password="True"
+                            attrs="{'invisible': [('use_windows_auth', '=', True)]}" />
+                    </group>
+                    <notebook>
+                        <page string="Table Mappings">
+                            <field name="table_mapping_ids">
+                                <tree>
+                                    <field name="name" />
+                                    <field name="sql_table" />
+                                    <field name="odoo_model" />
+                                    <field name="sync_interval" />
+                                    <field name="last_sync" />
+                                    <field name="active" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_sql_table_mapping_form" model="ir.ui.view">
+        <field name="name">sql.table.mapping.form</field>
+        <field name="model">sql.table.mapping</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="sql_table" />
+                        <field name="odoo_model" />
+                        <field name="sync_interval" />
+                        <field name="active" />
+                        <field name="date_field" />
+                        <field name="last_sync" readonly="1" />
+                        <field name="sync_config_id" />
+                    </group>
+                    <notebook>
+                        <page string="Field Mappings">
+                            <field name="field_ids">
+                                <tree editable="bottom">
+                                    <field name="sql_field" />
+                                    <field name="odoo_field" />
+                                    <field name="is_key" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_sql_server_sync" model="ir.actions.act_window">
+        <field name="name">SQL Server Sync</field>
+        <field name="res_model">sql.server.sync</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_sql_server_sync"
+        name="SQL Server Sync"
+        action="action_sql_server_sync"
+        sequence="10" />
+</odoo>

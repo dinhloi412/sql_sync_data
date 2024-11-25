@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<!-- inv.phieucan Tree View -->
+
+	<!-- weightman Tree View -->
+	<record model="ir.ui.view" id="weightman_tree">
+		<field name="name">weightman.tree</field>
+		<field name="model">weightman</field>
+		<field name="arch" type="xml">
+			<tree string="weightman" create="false" edit="false" editable="bottom" sample="1">
+				<field name="warehouse_id" optional="show" />
+				<field name="docnum" optional="show" />
+				<field name="truckno" optional="show" />
+				<field name="prodname" optional="show" />
+				<field name="custname" optional="show" />
+				<field name="date_in" optional="show" />
+				<field name="time_in" widget="float_time" optional="show" />
+				<field name="date_out" optional="show" />
+				<field name="time_out" widget="float_time" optional="show" />
+				<field name="firstweight" sum="firstweight" optional="show" />
+				<field name="secondweight" sum="secondweight" optional="show" />
+				<field name="netweight" sum="netweight" optional="show" />
+				<field name="note" optional="show" />
+				<field name="trantype" optional="show" />
+				<field name="prodcode" optional="show" />
+				<field name="custcode" optional="show" />
+				<field name="date_time" optional="show" />
+				<field name="sobao" optional="show" />
+				<field name="tlbao" optional="show" />
+				<field name="tlbi" optional="show" />
+				<field name="tlthucte" optional="show" />
+				<field name="status" optional="show" />
+			</tree>
+		</field>
+	</record>
+
+	<!-- weightman search View -->
+	<record model="ir.ui.view" id="weightman_search">
+		<field name="name">weightman.view.search</field>
+		<field name="model">weightman</field>
+		<field name="arch" type="xml">
+			<search string="Search">
+				<field name="truckno" />
+				<field name="warehouse_id" />
+				<field name="docnum" />
+				<field name="prodname" />
+				<field name="custname" />
+				<separator />
+				<group expand="0" string="Group By">
+					<filter string="Kho xuất" name="khoxuat" domain="[]"
+						context="{'group_by': 'warehouse_id'}" />
+				</group>
+				<searchpanel>
+					<field name="warehouse_id" select="multi" enable_counters="1" />
+				</searchpanel>
+			</search>
+		</field>
+	</record>
+
+	<!-- phieucan Form View -->
+	<record model="ir.ui.view" id="weightman_form">
+		<field name="name">weightman.form</field>
+		<field name="model">weightman</field>
+		<field name="arch" type="xml">
+			<form string="weightman">
+				<sheet>
+					<group>
+						<group>
+							<field name="warehouse_id" />
+							<field name="docnum" />
+							<field name="truckno" />
+							<field name="prodname" />
+							<field name="custname" />
+							<field name="date_in" />
+							<field name="time_in" />
+							<field name="date_out" />
+							<field name="time_out" />
+							<field name="firstweight" />
+							<field name="secondweight" />
+							<field name="netweight" />
+						</group>
+						<group>
+							<field name="note" />
+							<field name="trantype" />
+							<field name="prodcode" />
+							<field name="custcode" />
+							<field name="date_time" />
+							<field name="sobao" />
+							<field name="tlbao" />
+							<field name="tlbi" />
+							<field name="tlthucte" />
+							<field name="status" />
+						</group>
+					</group>
+				</sheet>
+			</form>
+		</field>
+	</record>
+	<record id="weightman_act" model="ir.actions.act_window">
+		<field name="name">Phiếu cân (PM Cân)</field>
+		<field name="res_model">weightman</field>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="weightman_tree" />
+	</record>
+
+
+</odoo>
