@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="sync_data_root" name="Sync Data" sequence="1"/>
+        <menuitem id="sql_server_menu" name="SQL SERVER" parent="sync_data_root"
+            action="action_sql_server_sync" sequence="2" />
+        <menuitem id="model_menu" name="Phieu Can" parent="sync_data_root"
+            action="action_phieucan" sequence="3" />
+    </data>
+</odoo>

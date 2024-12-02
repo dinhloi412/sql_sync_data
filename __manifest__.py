@@ -8,7 +8,9 @@
     'data': [
         'security/ir.model.access.csv',
         "views/phieucan.xml",
-        'views/sync_view.xml'
+        'views/sync_view.xml',
+        'data/ir_cron_data.xml',
+        "views/menu_items.xml",
     ],
     'installable': True,
     'application': True,

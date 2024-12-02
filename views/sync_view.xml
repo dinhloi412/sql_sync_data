@@ -25,7 +25,6 @@
                                     <field name="name" />
                                     <field name="sql_table" />
                                     <field name="odoo_model" />
-                                    <field name="sync_interval" />
                                     <field name="last_sync" />
                                     <field name="active" />
                                 </tree>
@@ -47,7 +46,6 @@
                         <field name="name" />
                         <field name="sql_table" />
                         <field name="odoo_model" />
-                        <field name="sync_interval" />
                         <field name="active" />
                         <field name="date_field" />
                         <field name="last_sync" readonly="1" />
@@ -74,9 +72,4 @@
         <field name="res_model">sql.server.sync</field>
         <field name="view_mode">tree,form</field>
     </record>
-
-    <menuitem id="menu_sql_server_sync"
-        name="SQL Server Sync"
-        action="action_sql_server_sync"
-        sequence="10" />
 </odoo>

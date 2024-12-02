@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="ir_cron_sql_sync" model="ir.cron">
+            <field name="name">SQL Server Sync</field>
+            <field name="model_id" ref="model_sql_server_sync"/>
+            <field name="state">code</field>
+            <field name="code">model._run_scheduled_sync()</field>
+            <field name="interval_number">2</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall" eval="False"/>
+            <field name="active" eval="True"/>
+            <field name="nextcall" eval="DateTime.now().strftime('%Y-%m-%d %H:%M:%S')"/>
+
+        </record>
+</odoo>

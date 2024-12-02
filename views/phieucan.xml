@@ -8,15 +8,14 @@
 		<field name="model">weightman</field>
 		<field name="arch" type="xml">
 			<tree string="weightman" create="false" edit="false" editable="bottom" sample="1">
-				<field name="warehouse_id" optional="show" />
 				<field name="docnum" optional="show" />
 				<field name="truckno" optional="show" />
 				<field name="prodname" optional="show" />
 				<field name="custname" optional="show" />
 				<field name="date_in" optional="show" />
-				<field name="time_in" widget="float_time" optional="show" />
+				<field name="time_in" optional="show" />
 				<field name="date_out" optional="show" />
-				<field name="time_out" widget="float_time" optional="show" />
+				<field name="time_out" optional="show" />
 				<field name="firstweight" sum="firstweight" optional="show" />
 				<field name="secondweight" sum="secondweight" optional="show" />
 				<field name="netweight" sum="netweight" optional="show" />
@@ -41,18 +40,9 @@
 		<field name="arch" type="xml">
 			<search string="Search">
 				<field name="truckno" />
-				<field name="warehouse_id" />
 				<field name="docnum" />
 				<field name="prodname" />
 				<field name="custname" />
-				<separator />
-				<group expand="0" string="Group By">
-					<filter string="Kho xuất" name="khoxuat" domain="[]"
-						context="{'group_by': 'warehouse_id'}" />
-				</group>
-				<searchpanel>
-					<field name="warehouse_id" select="multi" enable_counters="1" />
-				</searchpanel>
 			</search>
 		</field>
 	</record>
@@ -66,7 +56,6 @@
 				<sheet>
 					<group>
 						<group>
-							<field name="warehouse_id" />
 							<field name="docnum" />
 							<field name="truckno" />
 							<field name="prodname" />
@@ -96,12 +85,9 @@
 			</form>
 		</field>
 	</record>
-	<record id="weightman_act" model="ir.actions.act_window">
+	<record id="action_phieucan" model="ir.actions.act_window">
 		<field name="name">Phiếu cân (PM Cân)</field>
 		<field name="res_model">weightman</field>
 		<field name="view_mode">tree</field>
-		<field name="view_id" ref="weightman_tree" />
 	</record>
-
-
 </odoo>
