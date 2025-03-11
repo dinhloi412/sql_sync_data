@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Tree View -->
+    <record id="view_device_management_tree" model="ir.ui.view">
+        <field name="name">device.management.tree</field>
+        <field name="model">device.management</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+                <field name="device_identifier" />
+                <field name="api_token" />
+                <field name="is_active" />
+                <field name="last_access" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_device_management_form" model="ir.ui.view">
+        <field name="name">device.management.form</field>
+        <field name="model">device.management</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="regenerate_token" string="Regenerate Token" type="object"
+                        class="oe_highlight" />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" />
+                            <field name="device_identifier" />
+                            <field name="is_active" />
+                        </group>
+                        <group>
+                            <field name="api_token" readonly="1" />
+                            <field name="last_access" readonly="1" />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_device_management_search" model="ir.ui.view">
+        <field name="name">device.management.search</field>
+        <field name="model">device.management</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="device_identifier" />
+                <field name="api_token" />
+                <filter string="Active" name="active" domain="[('is_active', '=', True)]" />
+                <filter string="Inactive" name="inactive" domain="[('is_active', '=', False)]" />
+                <group expand="0" string="Group By">
+                    <filter string="Active Status" name="group_by_active"
+                        context="{'group_by': 'is_active'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_device_management" model="ir.actions.act_window">
+        <field name="name">Device Management</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">device.management</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_device_management_search" />
+        <field name="context">{'search_default_active': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first device!
+            </p>
+            <p>
+                Create devices to manage API access and tokens.
+            </p>
+        </field>
+    </record>
+
+    <!-- Menu Items -->
+    <menuitem
+        id="menu_device_management_root"
+        name="Device Management"
+        sequence="100" />
+
+    <menuitem
+        id="menu_device_management_main"
+        name="Devices"
+        parent="menu_device_management_root"
+        action="action_device_management"
+        sequence="1" />
+</odoo>
