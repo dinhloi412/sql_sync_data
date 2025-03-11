@@ -1,5 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_sql_server_sync,sql.server.sync,model_sql_server_sync,base.group_user,1,1,1,1
-access_sql_table_mapping,sql.table.mapping,model_sql_table_mapping,base.group_user,1,1,1,1
-access_sql_field_mapping,sql.field.mapping,model_sql_field_mapping,base.group_user,1,1,1,1
 access_weightman,sql.server.sync,model_weightman,base.group_user,1,1,1,1
+access_device_management_admin,device.management.admin,model_device_management,base.group_system,1,1,1,1

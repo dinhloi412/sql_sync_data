@@ -1,45 +1,104 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
+from datetime import datetime
 from odoo import api, fields, models, tools, SUPERUSER_ID
-from datetime import datetime, timedelta, date
-from odoo.exceptions import UserError, ValidationError
 
 
-class Weightman(models.Model):
-    _name = "weightman"
-    _description = "Phiếu cân phần mềm cân"
-    _order = 'id'
+class SyncWeightman(models.Model):
+    _name = "sync.weightman"
+    _description = "Đồng bộ phiếu cân"
 
-    name = fields.Char("Name", compute='_compute_name', store=True)
+    @staticmethod
+    def _prepare_values(values):
+        return (
+            values.get('agent_name'),
+            values.get('Docnum'),
+            values.get('Truckno'),
+            values.get('Prodname'),
+            values.get('Custname'),
+            values.get('Datein'),
+            values.get('Dateout'),
+            values.get('Firstweight'),
+            values.get('Secondweight'),
+            values.get('Netweight'),
+            values.get('Note'),
+            values.get('Trantype'),
+            values.get('Prodcode'),
+            values.get('Custcode'),
+            values.get('time_in'),
+            values.get('time_out'),
+            values.get('date_time'),
+            values.get('sobao'),
+            values.get('tlbao'),
+            values.get('tlbi'),
+            values.get('tlthucte'),
+            values.get('status')
+        )
 
-    sequence = fields.Integer(
-        "Sequence", default=10,
-            help="Gives the sequence order when displaying a list of stages.")
-    requirements = fields.Text("Requirements")
-    active = fields.Boolean("Active", default=True)
+    @api.model
+    def api_create_record(self, values):
+        try:
+            cr = self.env.cr
+            check_query = """
+                SELECT id FROM weightman 
+                WHERE ticket_num = %s
+            """
+            cr.execute(check_query, (values.get('Ticketnum'),))
+            existing_record = cr.fetchone()
+            common_values = self._prepare_values(values)
+            if existing_record:
+                update_query = """
+                    UPDATE weightman SET
+                        warehouse_id = %s,
+                        docnum = %s,
+                        truckno = %s,
+                        prodname = %s,
+                        custname = %s,
+                        date_in = %s,
+                        date_out = %s,
+                        firstweight = %s,
+                        secondweight = %s,
+                        netweight = %s,
+                        note = %s,
+                        trantype = %s,
+                        prodcode = %s,
+                        custcode = %s,
+                        time_in = %s,
+                        time_out = %s,
+                        date_time = %s,
+                        sobao = %s,
+                        tlbao = %s,
+                        tlbi = %s,
+                        tlthucte = %s,
+                        status = %s,
+                        write_date = NOW()
+                    WHERE ticket_num = %s
+                    RETURNING id
+                """
+                params = common_values + (values.get('Ticketnum'),)
+                cr.execute(update_query, params)
 
-    # warehouse_id = fields.Many2one('stock.warehouse', string='Kho xuất')
-    ticket_num = fields.Char('Ticket Number')
-    docnum = fields.Char('docnum')
-    truckno = fields.Char('truckno')
-    prodname = fields.Char('prodname')
-    custname = fields.Char('custname')
-    date_in = fields.Date(string='date_in')
-    date_out = fields.Date(string='date_out')
-    firstweight = fields.Integer(string='firstweight')
-    secondweight = fields.Integer(string='secondweight')
-    netweight = fields.Integer(string='netweight')
-    note = fields.Char('note')
-    trantype = fields.Char('trantype')
-    prodcode = fields.Char('prodcode')
-    custcode = fields.Char('custcode')
-    time_in = fields.Char(string='time_in')
-    time_out = fields.Char(string='time_out')
-    date_time = fields.Datetime(string='date_time')
-    sobao = fields.Integer(string='sobao')
-    tlbao = fields.Integer(string='tlbao')
-    tlbi = fields.Integer(string='tlbi')
-    tlthucte = fields.Integer(string='tlthucte')
-    status = fields.Char('status')
-
+            else:
+                insert_query = """
+                    INSERT INTO weightman (
+                        create_uid, create_date, write_uid, write_date, 
+                        ticket_num, warehouse_id, docnum, truckno, prodname, custname,
+                        date_in, date_out, firstweight, secondweight,
+                        netweight, note, trantype, prodcode, custcode,
+                        time_in, time_out, date_time, sobao, tlbao,
+                        tlbi, tlthucte, status, active, sequence
+                    ) VALUES (
+                        %s, NOW(), %s, NOW(), %s, %s,
+                        %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                        %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                        %s, %s, %s, true, 10
+                    )
+                    RETURNING id
+                """
+                params = (SUPERUSER_ID, SUPERUSER_ID, values.get('Ticketnum')) + common_values
+                cr.execute(insert_query, params)
+        except Exception as e:
+            return {
+                'success': False,
+                'error': str(e)
+            }
