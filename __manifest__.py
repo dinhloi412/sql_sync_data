@@ -6,11 +6,11 @@
     'summary': 'Sync data from SQL Server to Odoo',
     'depends': ['base', 'mail', 'sale'],
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         # "views/phieucan.xml",
         # 'views/sync_view.xml',
         # 'data/ir_cron_data.xml',
-        # 'views/device_management_views.xml',
+        'views/device_management_views.xml',
         # "views/menu_items.xml"
     ],
     'installable': True,
