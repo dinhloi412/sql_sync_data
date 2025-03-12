@@ -25,7 +25,6 @@ class WeightManAPIController(http.Controller):
                 }
             model = request.env['weightman']
             for item in data['data']:
-                print(data['data'], "data")
                 result = model.api_create_record(item)
 
             return {

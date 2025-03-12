@@ -4,7 +4,7 @@
     'version': '15.0.1.0.0',
     'category': 'Extra Tools',
     'summary': 'Sync data from SQL Server to Odoo',
-    'depends': ['base', 'mail', 'sale'],
+    'depends': ['base', 'mail', 'sale', 'giaohang'],
     'data': [
         'security/ir.model.access.csv',
         # "views/phieucan.xml",
