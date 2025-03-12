@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_device_management_admin,device.management.admin,model_device_management,base.group_system,1,1,1,1
+access_sync_weightman,sync.weightman access,model_sync_weightman,base.group_user,1,1,1,0
