@@ -2,7 +2,6 @@ from functools import wraps
 from odoo.http import request
 import json
 
-
 def validate_token(func):
     @wraps(func)
     def wrapper(self, *args, **kwargs):
@@ -20,6 +19,7 @@ def validate_token(func):
         token = auth_header.split(' ')[1]
         device_model = request.env['device.management'].sudo()
         device = device_model.validate_token(token)
+
         if not device:
             return request.make_response(
                 json.dumps({
@@ -29,6 +29,8 @@ def validate_token(func):
                 headers=[('Content-Type', 'application/json')],
                 status=401
             )
+
         request.device = device
         return func(self, *args, **kwargs)
+
     return wrapper
